@@ -1,8 +1,9 @@
+import Register from "./Register";
 
 const Home = () => {
     return (
         <div>
-            <h2>Home</h2>
+            <Register></Register>
         </div>
     );
 };
