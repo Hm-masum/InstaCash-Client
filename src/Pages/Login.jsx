@@ -25,15 +25,15 @@ const Login = () => {
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-
-      console.log(result);
+      
       Swal.fire({
         title: "Success!",
         text: "Login Successfully",
         icon: "success",
-        confirmButtonText: "Cool",
+        timer: 1500,
       }).then(() => {
-        navigate("/dashboard")
+        //navigate("/dashboard")
+         window.location.href = "/dashboard";
       });
     } catch (err) {
       toast.error(err.message);

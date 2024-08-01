@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const Register = () => {
   const axiosCommon = useAxiosCommon();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,28 +15,32 @@ const Register = () => {
     const email = form.email.value;
     const mobile = form.mobile.value;
     const pin = form.pin.value;
-    const role = form.role.value
+    const role = form.role.value;
 
     const userData = {
       name,
       email,
       mobile,
       pin,
-      role
+      role,
     };
 
     try {
       const result = await axiosCommon.post(`/users`, userData);
-      console.log(result);
-      
-      Swal.fire({
-        title: "Success!",
-        text: "Registration Successful",
-        icon: "success",
-        confirmButtonText: "Cool",
-      }).then(() => {
-        navigate("/dashboard")
-      });
+
+      if (result.data.insertedId !== null) {
+        Swal.fire({
+          title: "Success!",
+          text: "Registration Successful",
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          navigate("/login");
+        });
+      }
+      else{
+        toast.error("user already exist");
+      }
     } catch (err) {
       toast.error(err.message);
     }
@@ -112,11 +116,17 @@ const Register = () => {
                 <div className="form-control md:w-1/2">
                   <label className="block text-sm">Role</label>
                   <div className="mt-2 relative">
-                    <select name="role" id="role" className="select select-bordered w-full">
-                        <option disabled selected>Choose the role?</option>
-                        <option value='agent'>Agent</option>
-                        <option value='user'>User</option>
-                   </select>
+                    <select
+                      name="role"
+                      id="role"
+                      className="select select-bordered w-full"
+                    >
+                      <option disabled selected>
+                        Choose the role?
+                      </option>
+                      <option value="agent">Agent</option>
+                      <option value="user">User</option>
+                    </select>
                   </div>
                 </div>
               </div>
