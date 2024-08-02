@@ -16,7 +16,6 @@ const Sidebar = () => {
   const [role,]=useRoles();
 
   
-
   const handleToggle = () => {
     setActive(!isActive);
   };

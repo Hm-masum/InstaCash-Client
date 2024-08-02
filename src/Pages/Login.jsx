@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import imgBg from "../assets/imgBg.png";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import Swal from "sweetalert2";
@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const axiosCommon = useAxiosCommon();
-  const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
