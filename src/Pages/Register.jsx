@@ -3,6 +3,7 @@ import imgBg from "../assets/imgBg.png";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { imageUpload } from "../utils/ImgBB_api";
 
 const Register = () => {
   const axiosCommon = useAxiosCommon();
@@ -16,16 +17,19 @@ const Register = () => {
     const mobile = form.mobile.value;
     const pin = form.pin.value;
     const role = form.role.value;
+    const image = form.image.files[0];
 
-    const userData = {
-      name,
-      email,
-      mobile,
-      pin,
-      role,
-    };
+    if(pin.length !== 5){
+      return toast.error("pin must be 5 numbers");
+    }
 
     try {
+      const image_url = await imageUpload(image);
+
+      const userData = {
+        name,email,mobile,pin,role,image_url
+      };
+
       const result = await axiosCommon.post(`/users`, userData);
 
       if (result.data.insertedId !== null) {
@@ -59,67 +63,68 @@ const Register = () => {
           </h2>
 
           <form onSubmit={handleSubmit}>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div>
-                <label className="block mb text-sm">Your Name</label>
-                <div className="mt-2">
+                <label className="block text-sm">Your Name</label>
+                <div className="mt-1">
                   <input
                     type="name"
                     name="name"
                     required
                     placeholder="Enter Your name"
-                    className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                    className="w-full p-[10px] border rounded-md border-gray-400 text-gray-900"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block mb text-sm">Email address</label>
-                <div className="mt-2">
+                <label className="block text-sm">Email address</label>
+                <div className="mt-1">
                   <input
                     type="email"
                     name="email"
                     required
                     placeholder="Enter Your Email"
-                    className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                    className="w-full p-[10px] border rounded-md border-gray-400 text-gray-900"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block mb text-sm">Mobile Number</label>
-                <div className="mt-2 relative">
+                <label className="block text-sm">Mobile Number</label>
+                <div className="mt-1 relative">
                   <input
                     type="number"
                     name="mobile"
                     required
                     placeholder="Enter Mobile Number"
-                    className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                    className="w-full p-[10px] border rounded-md border-gray-400 text-gray-900"
                   />
                 </div>
               </div>
 
-              <div className="md:flex items-center gap-4">
+              <div className="flex flex-col md:flex-row gap-3">
                 <div className="form-control md:w-1/2">
                   <label className="block text-sm">PIN Number</label>
-                  <div className="mt-2 relative">
+                  <div className="mt-1 relative">
                     <input
                       type="number"
                       name="pin"
                       required
                       placeholder="Enter Pin Number"
-                      className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
+                      className="w-full p-[10px] border rounded-md border-gray-400 text-gray-900"
                     />
                   </div>
                 </div>
 
                 <div className="form-control md:w-1/2">
                   <label className="block text-sm">Role</label>
-                  <div className="mt-2 relative">
+                  <div className="mt-1 relative">
                     <select
                       name="role"
                       id="role"
                       className="select select-bordered w-full"
+                      defaultValue={"user"}
                     >
                       <option disabled selected>
                         Choose the role?
@@ -128,6 +133,13 @@ const Register = () => {
                       <option value="user">User</option>
                     </select>
                   </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm">Select Your Photo</label>
+                <div className="mt-1 relative">
+                <input type="file" id="image" name="image" className="file-input file-input-bordered w-full" />
                 </div>
               </div>
 

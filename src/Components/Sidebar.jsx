@@ -2,18 +2,23 @@ import { useState } from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import useAuth from "../Hooks/useAuth";
 import { NavLink, useNavigate } from "react-router-dom";
-import { GrLogout } from "react-icons/gr";
-import { FcSettings } from "react-icons/fc";
-import { FaUsers } from "react-icons/fa";
+import { GrLogout, GrSend } from "react-icons/gr";
+import { FaFileExport, FaFileImport, FaUsers } from "react-icons/fa";
 import toast from "react-hot-toast";
-import logo from '../assets/—Pngtree—letter i 3d company logo_4173422.png'
+import logo from '../assets/logo.png'
 import useRoles from "../Hooks/useRoles";
+import { HiClipboardCheck } from "react-icons/hi";
+import { IoDuplicateSharp, IoShieldHalf } from "react-icons/io5";
+import { HiClipboardDocument } from "react-icons/hi2";
+import { CgProfile } from "react-icons/cg";
+import useNumOfRequest from "../Hooks/useNumOfRequest";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(false);
   const navigate = useNavigate();
   const [role,]=useRoles();
+  const [numberOfReq,] = useNumOfRequest();
 
   
   const handleToggle = () => {
@@ -36,7 +41,7 @@ const Sidebar = () => {
       {/* Small Screen Navbar */}
       <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
         <div className="block cursor-pointer p-3 font-bold">
-          <div className="flex justify-center items-center gap-2">
+          <div className="flex justify-center items-center">
             <img src={logo} width="50" height="50" />
             <h2 className="text-xl">InstaCash</h2>
           </div>
@@ -58,7 +63,7 @@ const Sidebar = () => {
       >
         <div>
           <div className="w-full hidden md:flex px-4 py-1 shadow-lg rounded-lg justify-center items-center bg-purple-300 mx-auto">
-            <div className="flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center">
               <img src={logo} width="45" height="45" />
               <h2 className="text-2xl font-semibold">InstaCash</h2>
             </div>
@@ -90,7 +95,7 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
+                <HiClipboardCheck className="w-5 h-5" />
                 <span className="mx-4 font-medium">All Transaction</span>
               </NavLink>}
 
@@ -98,13 +103,14 @@ const Sidebar = () => {
                 to="/dashboard/manage-transactions"
                 end
                 className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                  `flex items-center pl-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
                     isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
-                <span className="mx-4 font-medium">Manage Transactions</span>
+                <IoShieldHalf className="w-5 h-5" />
+                <span className="ml-4 mr-2 font-medium">Manage Transactions</span>
+                <div className="badge badge-secondary">{numberOfReq}</div>
               </NavLink>}
 
               {role === 'agent' && <NavLink
@@ -116,8 +122,34 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
+                <IoDuplicateSharp className="w-5 h-5" />
                 <span className="mx-4 font-medium">My Transaction</span>
+              </NavLink>}
+
+              {role === 'agent' && <NavLink
+                to="/dashboard/cash-in"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <FaFileImport className="w-5 h-5" />
+                <span className="mx-4 font-medium">Cash In</span>
+              </NavLink>}
+
+              {role === 'agent' && <NavLink
+                to="/dashboard/cash-out"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <FaFileExport className="w-5 h-5" />
+                <span className="mx-4 font-medium">Cash Out</span>
               </NavLink>}
 
               {role === 'user' && <NavLink
@@ -129,7 +161,7 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
+                <GrSend className="w-5 h-5" />
                 <span className="mx-4 font-medium">Send Money</span>
               </NavLink>}
 
@@ -142,7 +174,7 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
+                <FaFileImport className="w-5 h-5" />
                 <span className="mx-4 font-medium">Cash In</span>
               </NavLink>}
 
@@ -155,8 +187,21 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
+                <FaFileExport className="w-5 h-5" />
                 <span className="mx-4 font-medium">Cash Out</span>
+              </NavLink>}
+
+              {role === 'user' && <NavLink
+                to="/dashboard/my-request"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <HiClipboardDocument className="w-5 h-5" />
+                <span className="mx-4 font-medium">My Request</span>
               </NavLink>}
 
               {role === 'user' && <NavLink
@@ -168,7 +213,7 @@ const Sidebar = () => {
                   }`
                 }
               >
-                <FaUsers className="w-5 h-5" />
+                <IoDuplicateSharp className="w-5 h-5" />
                 <span className="mx-4 font-medium">My Transaction</span>
               </NavLink>}
                         
@@ -186,7 +231,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FcSettings className="w-5 h-5" />
+            <CgProfile className="w-5 h-5" />
             <span className="mx-4 font-medium">Profile</span>
           </NavLink>
 

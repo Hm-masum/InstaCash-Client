@@ -13,7 +13,6 @@ const AuthProvider = ({children}) => {
           setUser(JSON.parse(storedUser))
         }
         setLoading(false);
-        console.log(JSON.parse(storedUser))
     },[])
     
     

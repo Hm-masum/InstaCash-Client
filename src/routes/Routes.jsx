@@ -14,6 +14,7 @@ import MyTransactions from "../Pages/DashBoard/MyTransactions";
 import AllUsers from "../Pages/DashBoard/AllUsers";
 import AllTransactions from "../Pages/DashBoard/AllTransactions";
 import AdminRoutes from "./AdminRoutes";
+import MyRequest from "../Pages/DashBoard/MyRequest";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
           {
             path: "cash-in",
             element: <PrivateRoutes><CashIn></CashIn></PrivateRoutes>,
+          },
+          {
+            path: "my-request",
+            element: <PrivateRoutes><MyRequest></MyRequest></PrivateRoutes>,
           },
           {
             path: "send-money",
