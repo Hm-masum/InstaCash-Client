@@ -1,23 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
+import { Typewriter } from "react-simple-typewriter";
+import useAllTransaction from "../../Hooks/useAllTransaction";
 
 const AllTransactions = () => {
-  const axiosSecure = useAxiosSecure();
-
-  const { data: transactions = [], isLoading } = useQuery({
-    queryKey: ["all-transactions"],
-    queryFn: async () => {
-      const { data } = await axiosSecure(`/all-transactions`);
-      return data;
-    },
-  });
+  const [transactions, isLoading]= useAllTransaction();
 
   if(isLoading) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
 
   return (
     <div className="py-8">
-
-      <h2 className="text-4xl pb-6 font-semibold text-center">All Transaction</h2>
+      <Helmet>
+          <title>InstaCash | All Transaction</title>
+      </Helmet>
+      
+      <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          <Typewriter
+            words={['All Transactions']}
+            loop={20}
+            cursor
+            cursorStyle=' '
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+      </h2>
 
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

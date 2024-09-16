@@ -6,15 +6,15 @@ const useNumOfRequest = () => {
     const {user,}=useAuth();
     const axiosSecure=useAxiosSecure();
 
-    const {data: numberOfReq='', refetch} =useQuery({
+    const {data: numberOfReq='',isLoading,refetch} =useQuery({
         queryKey: ['numberOfReq', user?.mobile],
         queryFn: async () =>{
             const {data}= await axiosSecure(`/transactions-req/${user?.mobile}`)
-            return data.length
+            return data;
         }
     })
 
-    return [numberOfReq,refetch]
+    return [numberOfReq,isLoading,refetch]
 };
 
 export default useNumOfRequest;

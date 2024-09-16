@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import logo from '../assets/logo.png'
 import useRoles from "../Hooks/useRoles";
 import { HiClipboardCheck } from "react-icons/hi";
-import { IoDuplicateSharp, IoShieldHalf } from "react-icons/io5";
+import { IoDuplicateSharp, IoShieldHalf, IoStatsChartOutline } from "react-icons/io5";
 import { HiClipboardDocument } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
 import useNumOfRequest from "../Hooks/useNumOfRequest";
@@ -18,7 +18,7 @@ const Sidebar = () => {
   const [isActive, setActive] = useState(false);
   const navigate = useNavigate();
   const [role,]=useRoles();
-  const [numberOfReq,] = useNumOfRequest();
+  const [numberOfReq,,] = useNumOfRequest();
 
   
   const handleToggle = () => {
@@ -41,10 +41,10 @@ const Sidebar = () => {
       {/* Small Screen Navbar */}
       <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
         <div className="block cursor-pointer p-3 font-bold">
-          <div className="flex justify-center items-center">
+          <NavLink to={`/dashboard`} className="flex justify-center items-center">
             <img src={logo} width="50" height="50" />
             <h2 className="text-xl">InstaCash</h2>
-          </div>
+          </NavLink>
         </div>
 
         <button
@@ -62,11 +62,11 @@ const Sidebar = () => {
         }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
         <div>
-          <div className="w-full hidden md:flex px-4 py-1 shadow-lg rounded-lg justify-center items-center bg-purple-300 mx-auto">
-            <div className="flex items-center justify-center">
+          <div className="w-full hidden text-white md:flex px-4 py-1 shadow-lg rounded-lg justify-center items-center bg-purple-700 mx-auto">
+            <NavLink to={`/dashboard`} className="flex items-center justify-center">
               <img src={logo} width="45" height="45" />
               <h2 className="text-2xl font-semibold">InstaCash</h2>
-            </div>
+            </NavLink>
           </div>
 
           {/* Nav Items */}
@@ -110,7 +110,7 @@ const Sidebar = () => {
               >
                 <IoShieldHalf className="w-5 h-5" />
                 <span className="ml-4 mr-2 font-medium">Manage Transactions</span>
-                <div className="badge badge-secondary">{numberOfReq}</div>
+                <div className="badge bg-purple-700 text-white">{numberOfReq.length}</div>
               </NavLink>}
 
               {role === 'agent' && <NavLink
@@ -202,6 +202,7 @@ const Sidebar = () => {
               >
                 <HiClipboardDocument className="w-5 h-5" />
                 <span className="mx-4 font-medium">My Request</span>
+                <div className="badge bg-purple-700 text-white">{numberOfReq.length}</div>
               </NavLink>}
 
               {role === 'user' && <NavLink
@@ -216,6 +217,21 @@ const Sidebar = () => {
                 <IoDuplicateSharp className="w-5 h-5" />
                 <span className="mx-4 font-medium">My Transaction</span>
               </NavLink>}
+
+              <NavLink
+                to="/dashboard/statistics"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
+                    isActive ? "bg-gray-300  text-gray-700" : "text-gray-600"
+                  }`
+                }
+              >
+                <IoStatsChartOutline className="w-5 h-5" />
+                <span className="mx-4 font-medium">My Stats</span>
+              </NavLink>
+
+              
                         
             </nav>
           </div>

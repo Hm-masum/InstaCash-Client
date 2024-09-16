@@ -11,7 +11,7 @@ const useBalance = () => {
         enabled: !loading && !!user?.email,
         queryFn: async () =>{
             const {data}= await axiosCommon(`/user/${user?.email}`)
-            return data.balance
+            return data.balance.toFixed(2)
         }
     })
 

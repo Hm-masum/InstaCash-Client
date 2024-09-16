@@ -1,13 +1,18 @@
+import { Helmet } from "react-helmet-async";
 import useAuth from "../../Hooks/useAuth";
 import useBalance from "../../Hooks/useBalance";
 import bg from "../../assets/bg.jpg"
 
 const MyProfile = () => {
   const { user } = useAuth();
-  const [balance,refetch] =useBalance()
+  const [balance,] =useBalance()
 
   return (
     <div className="flex justify-center items-center lg:h-[80vh]">
+      <Helmet>
+          <title>InstaCash | My Profile</title>
+      </Helmet>
+
       <div className="bg-white shadow-lg rounded-2xl w-full md:w-3/5">
         <img
           alt="profile"
@@ -23,7 +28,7 @@ const MyProfile = () => {
             />
           </a>
 
-          <p className="p-2 uppercase px-4 text-xs text-white bg-pink-500 rounded-full">
+          <p className="p-2 uppercase px-4 text-xs text-white bg-purple-700 rounded-full">
             {user?.role}
           </p>
           <p className="mt-2 text-xl font-medium text-gray-800 ">

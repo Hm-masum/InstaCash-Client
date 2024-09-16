@@ -3,6 +3,8 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useBalance from "../../Hooks/useBalance";
+import { Helmet } from "react-helmet-async";
+import { Typewriter } from "react-simple-typewriter";
 
 const SendMoney = () => {
     const {user}=useAuth();
@@ -58,8 +60,22 @@ const SendMoney = () => {
 
   return (
     <div className="rounded-lg border-2 p-3 md:p-14 lg:h-[93vh]">
+      <Helmet>
+          <title>InstaCash | Send Money</title>
+      </Helmet>
+
       <div className="px-2 md:px-24 pt-4 space-y-4">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center">Send Money</h2>
+        <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          <Typewriter
+            words={['Send Money']}
+            loop={20}
+            cursor
+            cursorStyle=' '
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+        </h2>
 
         <h2 className="py-3 md:py-5 md:text-xl font-semibold">Your Current Balance : {balance} Taka</h2>
          

@@ -3,6 +3,7 @@ import imgBg from "../assets/imgBg.png";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const axiosCommon = useAxiosCommon();
@@ -41,6 +42,10 @@ const Login = () => {
 
   return (
     <div className="flex md:flex-row flex-col items-center justify-center px-3 md:px-24">
+      <Helmet>
+          <title>InstaCash | Login</title>
+      </Helmet>
+
       <div className="md:w-1/2">
         <img className="w-[600px] md:h-[600px]" src={imgBg} alt="" />
       </div>
@@ -53,13 +58,13 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label className="block mb text-sm">Mobile Number</label>
+              <label className="block mb text-sm">Mobile Or Email</label>
               <div className="mt-2 relative">
                 <input
-                  type="number"
+                  type="text"
                   name="mobile"
                   required
-                  placeholder="Enter Mobile Number"
+                  placeholder="Enter Mobile Or Email"
                   className="w-full p-3 border rounded-md border-gray-400 text-gray-900"
                 />
               </div>

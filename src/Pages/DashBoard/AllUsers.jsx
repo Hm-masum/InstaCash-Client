@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { Typewriter } from "react-simple-typewriter";
 
 const AllUsers = () => {
     const axiosSecure=useAxiosSecure()
@@ -69,18 +71,34 @@ const AllUsers = () => {
 
   return (
     <div>
+      <Helmet>
+          <title>InstaCash | All Users</title>
+      </Helmet>
+      
       <div className="py-8">
-        
-      <form onSubmit={handleSearch} className="join">
-        <input
-          name="search"
-          onChange={(e)=>setSearchText(e.target.value)}
-          value={searchText}
-          className="input input-bordered join-item"
-          placeholder="Enter Name"
-        />
-        <button className="btn join-item">Search</button>
-      </form>
+
+        <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          <Typewriter
+            words={['All Users']}
+            loop={20}
+            cursor
+            cursorStyle=' '
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+        </h2>
+
+        <form onSubmit={handleSearch} className="join py-6">
+          <input
+            name="search"
+            onChange={(e)=>setSearchText(e.target.value)}
+            value={searchText}
+            className="input input-bordered join-item"
+            placeholder="Enter Name"
+          />
+          <button className="btn join-item">Search</button>
+        </form>
 
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -162,7 +180,7 @@ const AllUsers = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
-                        {user.balance}
+                        {user.balance.toFixed(2)}
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -172,14 +190,14 @@ const AllUsers = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                        { user.status== "activate" ? <p>activate</p> :
-                         <button onClick={()=>handleActivate(user)} className="btn btn-sm">
+                         <button onClick={()=>handleActivate(user)} className="btn btn-sm bg-purple-600 text-white">
                            Activate
                          </button>
                        }
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         { user.status== "block" ? <p>block</p> :
-                          <button onClick={()=>handleBlock(user)} className="btn btn-sm">
+                          <button onClick={()=>handleBlock(user)} className="btn btn-sm bg-purple-600 text-white">
                              Block
                           </button>
                         }

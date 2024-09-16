@@ -1,20 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useNumOfRequest from "../../Hooks/useNumOfRequest";
+import { Helmet } from "react-helmet-async";
+import { Typewriter } from "react-simple-typewriter";
 
 
 const ManageTransactions = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
-
-  const { data: transactionsReq = [], isLoading,refetch } = useQuery({
-    queryKey: ["transactionsReq"],
-    queryFn: async () => {
-      const { data } = await axiosSecure(`/transactions-req/${user?.mobile}`);
-      return data;
-    },
-  });
+  const [numberOfReq,isLoading, refetch] = useNumOfRequest();
 
   const handleAccept = async (transaction) => {
     Swal.fire({
@@ -70,8 +63,21 @@ const ManageTransactions = () => {
 
   return (
     <div className="py-8">
+      <Helmet>
+          <title>InstaCash | Manage Transaction</title>
+      </Helmet>
 
-      <h2 className="text-4xl pb-6 font-semibold text-center">Manage Transaction</h2>
+      <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          <Typewriter
+            words={['Manage Transactions']}
+            loop={20}
+            cursor
+            cursorStyle='-'
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+      </h2>
 
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -129,7 +135,7 @@ const ManageTransactions = () => {
               </tr>
             </thead>
             <tbody>
-              {transactionsReq.map((transaction, index) => (
+              {numberOfReq.map((transaction, index) => (
                 <tr key={transaction._id}>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">{index+1}</p>

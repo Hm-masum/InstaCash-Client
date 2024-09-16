@@ -15,6 +15,8 @@ import AllUsers from "../Pages/DashBoard/AllUsers";
 import AllTransactions from "../Pages/DashBoard/AllTransactions";
 import AdminRoutes from "./AdminRoutes";
 import MyRequest from "../Pages/DashBoard/MyRequest";
+import Statistics from "../Pages/DashBoard/Statistics";
+
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,10 @@ const router = createBrowserRouter([
           {
             path: "send-money",
             element: <PrivateRoutes><SendMoney></SendMoney></PrivateRoutes>,
+          },
+          {
+            path: "statistics",
+            element: <PrivateRoutes><Statistics></Statistics></PrivateRoutes>,
           },
           {
             path: "myProfile",

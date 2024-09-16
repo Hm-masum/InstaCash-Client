@@ -3,11 +3,15 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useBalance from "../../Hooks/useBalance";
+import useNumOfRequest from "../../Hooks/useNumOfRequest";
+import { Helmet } from "react-helmet-async";
+import { Typewriter } from "react-simple-typewriter";
 
 const CashOut = () => {
     const {user}=useAuth();
     const axiosSecure=useAxiosSecure();
     const [balance,refetch] =useBalance()
+    const [,,Refetch] = useNumOfRequest();
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -36,8 +40,9 @@ const CashOut = () => {
 
       try{
         const result =await axiosSecure.post(`/cash-out`,transactionData)
-        refetch()
         if (result.data.insertedId !== null) {
+          refetch();
+          Refetch();
           Swal.fire({
             title: "Please, wait!",
             text: "Your Cash Out Request is Successful",
@@ -57,8 +62,22 @@ const CashOut = () => {
 
   return (
     <div className="rounded-lg border-2 p-3 md:p-14 lg:h-[93vh]">
+      <Helmet>
+          <title>InstaCash | Cash Out</title>
+      </Helmet>
+      
       <div className="px-2 md:px-24 pt-4 space-y-4">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center">Cash Out</h2>
+         <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          <Typewriter
+            words={['Cash Out']}
+            loop={20}
+            cursor
+            cursorStyle=' '
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+         </h2>
 
         <h2 className="py-3 md:py-5 md:text-xl font-semibold">
           Your Current Balance : {balance} Taka
