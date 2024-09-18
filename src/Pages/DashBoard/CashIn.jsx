@@ -145,6 +145,7 @@ const CashIn = () => {
                 Cash In Request
               </button>
             </div>
+            <p className="text-purple-700">You can cash-in through agents without a fee .</p>
           </div>
         </form>
       </div>

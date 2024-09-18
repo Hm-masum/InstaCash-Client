@@ -97,7 +97,7 @@ const AllUsers = () => {
             className="input input-bordered join-item"
             placeholder="Enter Name"
           />
-          <button className="btn join-item">Search</button>
+          <button className="btn join-item bg-purple-700 text-white">Search</button>
         </form>
 
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

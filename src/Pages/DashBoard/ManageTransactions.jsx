@@ -72,7 +72,7 @@ const ManageTransactions = () => {
             words={['Manage Transactions']}
             loop={20}
             cursor
-            cursorStyle='-'
+            cursorStyle=' '
             typeSpeed={70}
             deleteSpeed={50}
             delaySpeed={1000}
@@ -164,12 +164,12 @@ const ManageTransactions = () => {
                     </p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <button onClick={()=>handleAccept(transaction)} className="btn btn-sm">
+                    <button onClick={()=>handleAccept(transaction)} className="btn bg-purple-700 text-white btn-sm">
                         Accept
                     </button>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <button onClick={()=>handleDelete(transaction)} className="btn btn-sm">
+                    <button onClick={()=>handleDelete(transaction)} className="btn bg-purple-700 text-white btn-sm">
                         Delete
                     </button>
                   </td>

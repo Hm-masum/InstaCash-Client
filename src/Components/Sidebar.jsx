@@ -229,10 +229,7 @@ const Sidebar = () => {
               >
                 <IoStatsChartOutline className="w-5 h-5" />
                 <span className="mx-4 font-medium">My Stats</span>
-              </NavLink>
-
-              
-                        
+              </NavLink>                       
             </nav>
           </div>
         </div>

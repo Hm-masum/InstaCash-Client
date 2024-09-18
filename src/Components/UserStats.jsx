@@ -29,16 +29,34 @@ const UserStats = () => {
   const [numberOfReq, ,] = useNumOfRequest();
   const [transactions, isLoading] = useMyTransaction();
 
-  let transactionsAmount = 0;
-  transactions.map((trans) => (transactionsAmount += trans.amount));
   let reqAmount = 0;
   numberOfReq.map((trans) => (reqAmount += trans.amount));
+
+  let CashInAmount=0,CashOutAmount=0,SendMoneyAmount=0,transactionsAmount = 0;;
+  for(const trans of transactions){
+     if(trans.process==='Cash In'){
+       CashInAmount+=trans.amount;
+     }
+     else if(trans.process==='Cash Out'){
+       CashOutAmount+=trans.amount;
+     }
+     else if(trans.process==='Send Money'){
+       SendMoneyAmount+=trans.amount;
+     }
+     transactionsAmount+=trans.amount;
+  }
+
+  const data = [
+    { name: "Cash In", value: CashInAmount },
+    { name: "Cash Out", value: CashOutAmount },
+    { name: "Send Money", value: SendMoneyAmount },
+  ];
 
   if(isLoading) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
 
 
   return (
-    <div>
+    <div className="py-10 space-y-6">
       <div className="stats shadow flex flex-col md:flex-row">
         <div className="stat place-items-center">
           <div className="stat-title">Total Balance</div>
@@ -65,11 +83,11 @@ const UserStats = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex justify-center">
         <BarChart
           width={500}
           height={300}
-          data={transactions}
+          data={data}
           margin={{
             top: 20,
             right: 30,
@@ -78,10 +96,10 @@ const UserStats = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="process" />
+          <XAxis dataKey="name" />
           <YAxis />
           <Bar
-            dataKey="amount"
+            dataKey="value"
             fill="#8884d8"
             shape={<TriangleBar />}
             label={{ position: "top" }}

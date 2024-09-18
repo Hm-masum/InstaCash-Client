@@ -146,6 +146,7 @@ const SendMoney = () => {
                 Send Money
               </button>
             </div>
+            <p className="text-purple-700">For every transaction over 100 taka, You have to pay a fee of <span className="text-red-500 font-semibold">5</span> Taka .</p>
           </div>
         </form>
       </div>

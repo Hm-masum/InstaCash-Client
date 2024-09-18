@@ -150,6 +150,7 @@ const CashOut = () => {
                 Cash Out
               </button>
             </div>
+            <p className="text-purple-700"> For every cash out, there will be a fee which is <span className="text-red-500 font-semibold">1.5%</span> of the transaction amount .</p>
           </div>
         </form>
       </div>
