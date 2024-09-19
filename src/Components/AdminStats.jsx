@@ -25,7 +25,7 @@ const TriangleBar = (props) => {
 
 const AdminStats = () => {
   const [transactions, isLoading] = useAllTransaction();
-  const [users] = useAllUser();
+  const [users,isLoading1] = useAllUser();
 
   let normalUser = users.filter((user) => user?.role === "user");
   let agent = users.filter((user) => user?.role === "agent");
@@ -45,7 +45,7 @@ const AdminStats = () => {
   }
   
 
-  if(isLoading) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
+  if(isLoading || isLoading1) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
 
   // For Charts 
   const data = [

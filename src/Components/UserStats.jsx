@@ -26,11 +26,13 @@ const TriangleBar = (props) => {
 const UserStats = () => {
   const { user } = useAuth();
   const [balance] = useBalance();
-  const [numberOfReq, ,] = useNumOfRequest();
+  const [numberOfReq,isLoading1,] = useNumOfRequest();
   const [transactions, isLoading] = useMyTransaction();
 
   let reqAmount = 0;
-  numberOfReq.map((trans) => (reqAmount += trans.amount));
+  for(const trans of numberOfReq){
+    reqAmount+=trans.amount;
+  }
 
   let CashInAmount=0,CashOutAmount=0,SendMoneyAmount=0,transactionsAmount = 0;;
   for(const trans of transactions){
@@ -52,7 +54,7 @@ const UserStats = () => {
     { name: "Send Money", value: SendMoneyAmount },
   ];
 
-  if(isLoading) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
+  if(isLoading || isLoading1) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
 
 
   return (
