@@ -8,76 +8,83 @@ import { Helmet } from "react-helmet-async";
 import { Typewriter } from "react-simple-typewriter";
 
 const CashOut = () => {
-    const {user}=useAuth();
-    const axiosSecure=useAxiosSecure();
-    const [balance,refetch] =useBalance()
-    const [,,Refetch] = useNumOfRequest();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [balance, refetch] = useBalance();
+  const [, , Refetch] = useNumOfRequest();
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const donar = form.donar.value;
-      const recipient = form.recipient.value;
-      let amount = form.amount.value;
-      amount=parseFloat(amount)
-      const pin = form.pin.value;
-      const date = new Date().toLocaleDateString();
-      const process= 'Cash Out Request'
-  
-      const transactionData = {
-        donar,recipient,amount,pin,date,process
-      };
-      let needBalance = amount + amount*0.015;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const donar = form.donar.value;
+    const recipient = form.recipient.value;
+    let amount = form.amount.value;
+    amount = parseFloat(amount);
+    const pin = form.pin.value;
+    const date = new Date().toLocaleDateString();
+    const process = "Cash Out Request";
 
-      if(user.status==='pending') return toast.error("please wait. admin will be activate your account soon!");
-      if(user.status==='block') return toast.error("Sorry!.Your account is block!"); 
-      if(pin.length !== 5) return toast.error("Your pin is not correct");
-      if(user.mobile !== donar) return toast.error("Incorrect your number.");
-      if(donar === recipient) return toast.error("Incorrect agent number.");
-      if(needBalance > user.balance){
-         return toast.error("Insufficient Balance.");
-      }
+    const transactionData = {
+      donar,
+      recipient,
+      amount,
+      pin,
+      date,
+      process,
+    };
+    let needBalance = amount + amount * 0.015;
 
-      try{
-        const result =await axiosSecure.post(`/cash-out`,transactionData)
-        if (result.data.insertedId !== null) {
-          refetch();
-          Refetch();
-          Swal.fire({
-            title: "Please, wait!",
-            text: "Your Cash Out Request is Successful",
-            icon: "success",
-            timer: 1500,
-          })
-        }
-        else{
-          toast.error(result.data.message)
-        }
-      }
-      catch(err){
-        toast.error(err.message)
-      }
-    
+    if (user.status === "pending")
+      return toast.error(
+        "please wait. admin will be activate your account soon!"
+      );
+    if (user.status === "block")
+      return toast.error("Sorry!.Your account is block!");
+    if (pin.length !== 5) return toast.error("Your pin is not correct");
+    if (user.mobile !== donar) return toast.error("Incorrect your number.");
+    if (donar === recipient) return toast.error("Incorrect agent number.");
+    if (needBalance > user.balance) {
+      return toast.error("Insufficient Balance.");
     }
 
+    try {
+      const result = await axiosSecure.post(`/cash-out`, transactionData);
+      if (result.data.insertedId !== null) {
+        refetch();
+        Refetch();
+        Swal.fire({
+          title: "Please, wait!",
+          text: "Your Cash Out Request is Successful",
+          icon: "success",
+          timer: 1500,
+        });
+      } else {
+        toast.error(result.data.message);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
   return (
-    <div className="rounded-lg border-2 p-3 md:p-14 lg:h-[93vh]">
+    <div className="rounded-lg border-2 border-purple-300 p-3 md:p-14 lg:h-[93vh]">
       <Helmet>
-          <title>InstaCash | Cash Out</title>
+        <title>InstaCash | Cash Out</title>
       </Helmet>
-      
-      <div className="px-2 md:px-24 pt-4 space-y-4">
-         <h2 className="text-3xl md:text-4xl font-semibold text-center">
+
+      <div className="px-2 md:px-24 pt-4 space-y-4 animate__animated animate__zoomIn animate__slow">
+        <h2 className="text-3xl md:text-4xl font-semibold text-center">
+          C
           <Typewriter
-            words={['Cash Out']}
+            words={["ash Out"]}
             loop={20}
             cursor
-            cursorStyle=' '
+            cursorStyle=" "
             typeSpeed={70}
             deleteSpeed={50}
             delaySpeed={1000}
           />
-         </h2>
+        </h2>
 
         <h2 className="py-3 md:py-5 md:text-xl font-semibold">
           Your Current Balance : {balance} Taka
@@ -150,7 +157,12 @@ const CashOut = () => {
                 Cash Out
               </button>
             </div>
-            <p className="text-purple-700"> For every cash out, there will be a fee which is <span className="text-red-500 font-semibold">1.5%</span> of the transaction amount .</p>
+            <p className="text-purple-700">
+              {" "}
+              For every cash out, there will be a fee which is{" "}
+              <span className="text-red-500 font-semibold">1.5%</span> of the
+              transaction amount .
+            </p>
           </div>
         </form>
       </div>

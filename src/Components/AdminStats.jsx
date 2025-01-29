@@ -3,7 +3,6 @@ import useAllTransaction from "../Hooks/useAllTransaction";
 import useAllUser from "../Hooks/useAllUser";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";
 
-
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 
 const getPath = (x, y, width, height) => {
@@ -25,29 +24,34 @@ const TriangleBar = (props) => {
 
 const AdminStats = () => {
   const [transactions, isLoading] = useAllTransaction();
-  const [users,isLoading1] = useAllUser();
+  const [users, isLoading1] = useAllUser();
 
   let normalUser = users.filter((user) => user?.role === "user");
   let agent = users.filter((user) => user?.role === "agent");
 
-  let CashInAmount=0,CashOutAmount=0,SendMoneyAmount=0,transactionsAmount = 0;;
-  for(const trans of transactions){
-     if(trans.process==='Cash In'){
-       CashInAmount+=trans.amount;
-     }
-     else if(trans.process==='Cash Out'){
-       CashOutAmount+=trans.amount;
-     }
-     else if(trans.process==='Send Money'){
-       SendMoneyAmount+=trans.amount;
-     }
-     transactionsAmount+=trans.amount;
+  let CashInAmount = 0,
+    CashOutAmount = 0,
+    SendMoneyAmount = 0,
+    transactionsAmount = 0;
+  for (const trans of transactions) {
+    if (trans.process === "Cash In") {
+      CashInAmount += trans.amount;
+    } else if (trans.process === "Cash Out") {
+      CashOutAmount += trans.amount;
+    } else if (trans.process === "Send Money") {
+      SendMoneyAmount += trans.amount;
+    }
+    transactionsAmount += trans.amount;
   }
-  
 
-  if(isLoading || isLoading1) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
+  if (isLoading || isLoading1)
+    return (
+      <div className="flex justify-center h-[50vh]">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
 
-  // For Charts 
+  // For Charts
   const data = [
     { name: "Cash In", value: CashInAmount },
     { name: "Cash Out", value: CashOutAmount },
@@ -56,17 +60,17 @@ const AdminStats = () => {
 
   return (
     <div className="py-10 space-y-6">
-      <div className="stats shadow flex flex-col md:flex-row">
-        <div className="stat place-items-center">
-          <div className="stat-title">Total Normal Users</div>
+      <div className="stats shadow flex flex-col md:flex-row animate__animated animate__fadeInDown animate__slow">
+        <div className="stat place-items-center space-y-3">
+          <div className="stat-title text-black">Total Normal Users</div>
           <div className="stat-value flex items-center gap-3">
             <FaUsers /> {normalUser.length}
           </div>
-          <div className="stat-desc">21% more than last month</div>
+          <div className="stat-desc text-black">21% more than last month</div>
         </div>
 
-        <div className="stat place-items-center">
-          <div className="stat-title">Total Transaction</div>
+        <div className="stat place-items-center space-y-3">
+          <div className="stat-title text-purple-700">Total Transaction</div>
           <div className="stat-value text-purple-700">
             {transactionsAmount} Taka
           </div>
@@ -75,16 +79,16 @@ const AdminStats = () => {
           </div>
         </div>
 
-        <div className="stat place-items-center">
-          <div className="stat-title">Total Agent</div>
+        <div className="stat place-items-center space-y-3">
+          <div className="stat-title text-black">Total Agent</div>
           <div className="stat-value flex items-center gap-3">
             <FaUserSecret /> {agent.length}
           </div>
-          <div className="stat-desc">15% more than last month</div>
+          <div className="stat-desc text-black">15% more than last month</div>
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center animate__animated animate__fadeInUp animate__slow">
         <BarChart
           width={500}
           height={300}

@@ -7,27 +7,32 @@ import useNumOfRequest from "../Hooks/useNumOfRequest";
 const AgentStats = () => {
   const { user } = useAuth();
   const [balance] = useBalance();
-  const [numberOfReq,isLoading1 ,] = useNumOfRequest();
+  const [numberOfReq, isLoading1] = useNumOfRequest();
   const [transactions, isLoading] = useMyTransaction();
 
   let reqAmount = 0;
-  for(const trans of numberOfReq){
-    reqAmount+=trans.amount;
+  for (const trans of numberOfReq) {
+    reqAmount += trans.amount;
   }
 
-  let CashInAmount=0,CashOutAmount=0,transactionsAmount = 0;
-  for(const trans of transactions){
-     if(trans.process==='Cash In'){
-       CashInAmount+=trans.amount;
-     }
-     else if(trans.process==='Cash Out'){
-       CashOutAmount+=trans.amount;
-     }
-     transactionsAmount+=trans.amount;
+  let CashInAmount = 0,
+    CashOutAmount = 0,
+    transactionsAmount = 0;
+  for (const trans of transactions) {
+    if (trans.process === "Cash In") {
+      CashInAmount += trans.amount;
+    } else if (trans.process === "Cash Out") {
+      CashOutAmount += trans.amount;
+    }
+    transactionsAmount += trans.amount;
   }
 
-  if(isLoading || isLoading1) return <div className="flex justify-center h-[50vh]"><span className="loading loading-bars loading-lg"></span></div>
-
+  if (isLoading || isLoading1)
+    return (
+      <div className="flex justify-center h-[50vh]">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
 
   //Custom shape for pie chart
 
@@ -57,8 +62,8 @@ const AgentStats = () => {
     );
   };
 
-  const COLORS = ['#00C49F', '#FFBB28'];
-   
+  const COLORS = ["#00C49F", "#FFBB28"];
+
   const data = [
     { name: "Cash In", value: CashInAmount },
     { name: "Cash Out", value: CashOutAmount },
@@ -66,15 +71,15 @@ const AgentStats = () => {
 
   return (
     <div className="py-10">
-      <div className="stats shadow flex flex-col md:flex-row">
-        <div className="stat place-items-center">
-          <div className="stat-title">Total Balance</div>
+      <div className="stats shadow flex flex-col md:flex-row animate__animated animate__fadeInDown animate__slow">
+        <div className="stat place-items-center space-y-3">
+          <div className="stat-title text-black">Total Balance</div>
           <div className="stat-value">{balance} Taka</div>
-          <div className="stat-desc">Mobile: {user.mobile}</div>
+          <div className="stat-desc  text-black">Mobile: {user.mobile}</div>
         </div>
 
-        <div className="stat place-items-center">
-          <div className="stat-title">Total Transaction</div>
+        <div className="stat place-items-center space-y-3">
+          <div className="stat-title text-purple-700">Total Transaction</div>
           <div className="stat-value text-purple-700">
             {transactionsAmount} Taka
           </div>
@@ -83,16 +88,16 @@ const AgentStats = () => {
           </div>
         </div>
 
-        <div className="stat place-items-center">
-          <div className="stat-title">Received Request</div>
+        <div className="stat place-items-center space-y-3">
+          <div className="stat-title text-black">Received Request</div>
           <div className="stat-value">{reqAmount} Taka</div>
-          <div className="stat-desc">
+          <div className="stat-desc text-black">
             Number of Request {numberOfReq.length}
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center animate__animated animate__fadeInUp animate__slow">
         <PieChart width={300} height={300}>
           <Pie
             data={data}

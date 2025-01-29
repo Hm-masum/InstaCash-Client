@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { imageUpload } from "../utils/ImgBB_api";
 import { Helmet } from "react-helmet-async";
+import "animate.css";
 
 const Register = () => {
   const axiosCommon = useAxiosCommon();
@@ -20,7 +21,7 @@ const Register = () => {
     const role = form.role.value;
     const image = form.image.files[0];
 
-    if(pin.length !== 5){
+    if (pin.length !== 5) {
       return toast.error("pin must be 5 numbers");
     }
 
@@ -28,7 +29,12 @@ const Register = () => {
       const image_url = await imageUpload(image);
 
       const userData = {
-        name,email,mobile,pin,role,image_url
+        name,
+        email,
+        mobile,
+        pin,
+        role,
+        image_url,
       };
 
       const result = await axiosCommon.post(`/users`, userData);
@@ -42,8 +48,7 @@ const Register = () => {
         }).then(() => {
           navigate("/login");
         });
-      }
-      else{
+      } else {
         toast.error("user already exist");
       }
     } catch (err) {
@@ -54,21 +59,21 @@ const Register = () => {
   return (
     <div>
       <Helmet>
-          <title>InstaCash | Register</title>
+        <title>InstaCash | Register</title>
       </Helmet>
 
       <div className="flex md:flex-row-reverse flex-col items-center justify-center px-3 md:px-24">
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 animate__animated animate__fadeInRight animate__slow">
           <img className="w-[600px] md:h-[600px]" src={imgBg} alt="" />
         </div>
 
-        <div className="md:w-1/2 px-2 md:px-14 space-y-4">
+        <div className="md:w-1/2 px-2 md:px-14 space-y-4 animate__animated animate__fadeInLeft animate__slow">
           <h2 className="text-4xl font-semibold text-center pb-3">
             Register Please!
           </h2>
 
           <form onSubmit={handleSubmit}>
-            <div className="space-y-3">
+            <div className="space-y-3 text-black text-xl">
               <div>
                 <label className="block text-sm">Your Name</label>
                 <div className="mt-1">
@@ -144,7 +149,12 @@ const Register = () => {
               <div>
                 <label className="block text-sm">Select Your Photo</label>
                 <div className="mt-1 relative">
-                <input type="file" id="image" name="image" className="file-input file-input-bordered w-full" />
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    className="file-input file-input-bordered w-full"
+                  />
                 </div>
               </div>
 

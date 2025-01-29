@@ -25,7 +25,7 @@ const Login = () => {
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      
+
       Swal.fire({
         title: "Success!",
         text: "Login Successfully",
@@ -33,24 +33,24 @@ const Login = () => {
         timer: 1500,
       }).then(() => {
         //navigate("/dashboard")
-         window.location.href = "/dashboard";
+        window.location.href = "/dashboard";
       });
     } catch (err) {
       toast.error(err.message);
     }
-  }
+  };
 
   return (
     <div className="flex md:flex-row flex-col items-center justify-center px-3 md:px-24">
       <Helmet>
-          <title>InstaCash | Login</title>
+        <title>InstaCash | Login</title>
       </Helmet>
 
-      <div className="md:w-1/2">
+      <div className="md:w-1/2 animate__animated animate__fadeInLeft animate__slow">
         <img className="w-[600px] md:h-[600px]" src={imgBg} alt="" />
       </div>
 
-      <div className="md:w-1/2 px-2 md:px-14 space-y-4">
+      <div className="md:w-1/2 px-2 md:px-14 space-y-4 animate__animated animate__fadeInRight animate__slow">
         <h2 className="text-4xl font-semibold text-center pb-3">
           Login Please!
         </h2>
