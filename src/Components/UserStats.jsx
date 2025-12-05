@@ -1,8 +1,8 @@
 import useAuth from "../Hooks/useAuth";
 import useBalance from "../Hooks/useBalance";
 import useMyTransaction from "../Hooks/useMyTransaction";
-import useNumOfRequest from "../Hooks/useNumOfRequest";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";
+import useMyTransactionReq from "../Hooks/useMyTransactionReq";
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 
@@ -26,11 +26,11 @@ const TriangleBar = (props) => {
 const UserStats = () => {
   const { user } = useAuth();
   const [balance] = useBalance();
-  const [numberOfReq, isLoading1] = useNumOfRequest();
+  const [myTransactionReq, isLoading1] = useMyTransactionReq();
   const [transactions, isLoading] = useMyTransaction();
 
   let reqAmount = 0;
-  for (const trans of numberOfReq) {
+  for (const trans of myTransactionReq) {
     reqAmount += trans.amount;
   }
 
@@ -85,7 +85,7 @@ const UserStats = () => {
           <div className="stat-title text-black">Pending Request</div>
           <div className="stat-value">{reqAmount} Taka</div>
           <div className="stat-desc text-black">
-            Number of Request {numberOfReq.length}
+            Number of Request {myTransactionReq.length}
           </div>
         </div>
       </div>

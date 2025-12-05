@@ -40,29 +40,29 @@ const SendMoney = () => {
     if (pin.length !== 5) return toast.error("Your pin is not correct");
     if (user.mobile !== donar) return toast.error("Incorrect your number.");
     if (donar === recipient) return toast.error("Incorrect recipient number.");
-    if (amount > user.balance || user.balance < 50) {
+    if (amount > user.balance && user.balance < 50) {
       return toast.error("Insufficient Balance.");
     }
     if (amount >= 100) {
       if (amount + 5 > user.balance)
         return toast.error("Insufficient Balance.");
-    }
-
-    try {
-      const result = await axiosSecure.post(`/send-money`, transactionData);
-      refetch();
-      if (result.data.insertedId !== null) {
-        Swal.fire({
-          title: "Congratulations!",
-          text: "Your send money is Successful",
-          icon: "success",
-          timer: 1500,
-        });
-      } else {
-        toast.error(result.data.message);
+    } else {
+      try {
+        const result = await axiosSecure.post(`/send-money`, transactionData);
+        refetch();
+        if (result.data.insertedId !== null) {
+          Swal.fire({
+            title: "Congratulations!",
+            text: "Your send money is Successful",
+            icon: "success",
+            timer: 1500,
+          });
+        } else {
+          toast.error(result.data.message);
+        }
+      } catch (err) {
+        toast.error(err.message);
       }
-    } catch (err) {
-      toast.error(err.message);
     }
   };
 

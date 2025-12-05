@@ -8,6 +8,7 @@ import { Typewriter } from "react-simple-typewriter";
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [searchText, setSearchText] = useState("");
 
   const {
@@ -15,9 +16,11 @@ const AllUsers = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["all-users"],
+    queryKey: ["all-users", search, userRole],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/all-users?search=${search}`);
+      const { data } = await axiosSecure(
+        `/all-users?search=${search}&filter=${userRole}`
+      );
       return data;
     },
   });
@@ -97,18 +100,39 @@ const AllUsers = () => {
           />
         </h2>
 
-        <form onSubmit={handleSearch} className="join py-6">
-          <input
-            name="search"
-            onChange={(e) => setSearchText(e.target.value)}
-            value={searchText}
-            className="input input-bordered join-item"
-            placeholder="Enter Name"
-          />
-          <button className="btn join-item bg-purple-700 text-white">
-            Search
-          </button>
-        </form>
+        <div className="flex items-center gap-5">
+          <form onSubmit={handleSearch} className="join py-6">
+            <input
+              name="search"
+              onChange={(e) => setSearchText(e.target.value)}
+              value={searchText}
+              className="input input-bordered join-item"
+              placeholder="Enter Name"
+            />
+            <button className="btn join-item bg-purple-700 text-white">
+              Search
+            </button>
+          </form>
+
+          <div className="w-full md:w-1/5">
+            <select
+              value={userRole}
+              onChange={(e) => {
+                setUserRole(e.target.value);
+                refetch();
+              }}
+              className="p-3 border rounded w-full"
+            >
+              <option value="" disabled>
+                Filter by
+              </option>
+              <option value="">All users</option>
+              <option value="admin">Admin</option>
+              <option value="agent">Agent</option>
+              <option value="user">user</option>
+            </select>
+          </div>
+        </div>
 
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -150,6 +174,12 @@ const AllUsers = () => {
                     className="px-5 py-3 border-b border-gray-200 text-white text-left text-sm uppercase font-normal"
                   >
                     Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-3 border-b border-gray-200 text-white text-left text-sm uppercase font-normal"
+                  >
+                    Role
                   </th>
                   <th
                     scope="col"
@@ -197,6 +227,21 @@ const AllUsers = () => {
                       <p className="text-gray-900 whitespace-no-wrap">
                         {user.status}
                       </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      {user.role == "admin" ? (
+                        <button className="btn btn-md bg-green-600 text-white">
+                          {user.role}
+                        </button>
+                      ) : user.role === "agent" ? (
+                        <button className="btn btn-md bg-purple-600 text-white">
+                          {user.role}
+                        </button>
+                      ) : (
+                        <button className="btn btn-md bg-blue-600 text-white">
+                          {user.role}
+                        </button>
+                      )}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {user.status == "activate" ? (

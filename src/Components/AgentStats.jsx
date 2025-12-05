@@ -2,16 +2,16 @@ import { Cell, Legend, Pie, PieChart } from "recharts";
 import useAuth from "../Hooks/useAuth";
 import useBalance from "../Hooks/useBalance";
 import useMyTransaction from "../Hooks/useMyTransaction";
-import useNumOfRequest from "../Hooks/useNumOfRequest";
+import useTransactionRequest from "../Hooks/useTransactionRequest";
 
 const AgentStats = () => {
   const { user } = useAuth();
   const [balance] = useBalance();
-  const [numberOfReq, isLoading1] = useNumOfRequest();
+  const [transactionRequest, isLoading1] = useTransactionRequest();
   const [transactions, isLoading] = useMyTransaction();
 
   let reqAmount = 0;
-  for (const trans of numberOfReq) {
+  for (const trans of transactionRequest) {
     reqAmount += trans.amount;
   }
 
@@ -92,7 +92,7 @@ const AgentStats = () => {
           <div className="stat-title text-black">Received Request</div>
           <div className="stat-value">{reqAmount} Taka</div>
           <div className="stat-desc text-black">
-            Number of Request {numberOfReq.length}
+            Number of Request {transactionRequest.length}
           </div>
         </div>
       </div>

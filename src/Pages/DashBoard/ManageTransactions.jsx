@@ -1,36 +1,43 @@
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import useNumOfRequest from "../../Hooks/useNumOfRequest";
 import { Helmet } from "react-helmet-async";
 import { Typewriter } from "react-simple-typewriter";
+import useBalance from "../../Hooks/useBalance";
+import toast from "react-hot-toast";
+import useTransactionRequest from "../../Hooks/useTransactionRequest";
 
 const ManageTransactions = () => {
   const axiosSecure = useAxiosSecure();
-  const [numberOfReq, isLoading, refetch] = useNumOfRequest();
+  const [transactionRequest, isLoading, refetch] = useTransactionRequest();
+  const [balance] = useBalance();
 
   const handleAccept = async (transaction) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Accept it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.post(`/accept-req/${transaction._id}`).then((res) => {
-          if (res.data.insertedId !== null) {
-            refetch();
-            Swal.fire({
-              title: "Accepted!",
-              text: "Transaction has been Accepted.",
-              icon: "success",
-            });
-          }
-        });
-      }
-    });
+    if (balance < transaction.amount) {
+      return toast.error("Insufficient Balance.");
+    } else {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accept it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.post(`/accept-req/${transaction._id}`).then((res) => {
+            if (res.data.insertedId !== null) {
+              refetch();
+              Swal.fire({
+                title: "Accepted!",
+                text: "Transaction has been Accepted.",
+                icon: "success",
+              });
+            }
+          });
+        }
+      });
+    }
   };
 
   const handleDelete = async (transaction) => {
@@ -142,7 +149,7 @@ const ManageTransactions = () => {
               </tr>
             </thead>
             <tbody>
-              {numberOfReq.map((transaction, index) => (
+              {transactionRequest.map((transaction, index) => (
                 <tr key={transaction._id}>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">

@@ -3,16 +3,17 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useBalance from "../../Hooks/useBalance";
-import useNumOfRequest from "../../Hooks/useNumOfRequest";
 import { Helmet } from "react-helmet-async";
 import { Typewriter } from "react-simple-typewriter";
+import useMyTransactionReq from "../../Hooks/useMyTransactionReq";
 
 const CashOut = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [balance, refetch] = useBalance();
-  const [, , Refetch] = useNumOfRequest();
+  const [, , Refetch] = useMyTransactionReq();
 
+  console.log(user);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -45,24 +46,24 @@ const CashOut = () => {
     if (donar === recipient) return toast.error("Incorrect agent number.");
     if (needBalance > user.balance) {
       return toast.error("Insufficient Balance.");
-    }
-
-    try {
-      const result = await axiosSecure.post(`/cash-out`, transactionData);
-      if (result.data.insertedId !== null) {
-        refetch();
-        Refetch();
-        Swal.fire({
-          title: "Please, wait!",
-          text: "Your Cash Out Request is Successful",
-          icon: "success",
-          timer: 1500,
-        });
-      } else {
-        toast.error(result.data.message);
+    } else {
+      try {
+        const result = await axiosSecure.post(`/cash-out`, transactionData);
+        if (result.data.insertedId !== null) {
+          refetch();
+          Refetch();
+          Swal.fire({
+            title: "Please, wait!",
+            text: "Your Cash Out Request is Successful",
+            icon: "success",
+            timer: 1500,
+          });
+        } else {
+          toast.error(result.data.message);
+        }
+      } catch (err) {
+        toast.error(err.message);
       }
-    } catch (err) {
-      toast.error(err.message);
     }
   };
 

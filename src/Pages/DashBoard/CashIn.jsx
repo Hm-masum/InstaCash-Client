@@ -3,15 +3,16 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useBalance from "../../Hooks/useBalance";
-import useNumOfRequest from "../../Hooks/useNumOfRequest";
+
 import { Typewriter } from "react-simple-typewriter";
 import { Helmet } from "react-helmet-async";
+import useMyTransactionReq from "../../Hooks/useMyTransactionReq";
 
 const CashIn = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [balance, refetch] = useBalance();
-  const [, , Refetch] = useNumOfRequest();
+  const [, , Refetch] = useMyTransactionReq();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
