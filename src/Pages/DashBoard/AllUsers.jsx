@@ -107,7 +107,7 @@ const AllUsers = () => {
               onChange={(e) => setSearchText(e.target.value)}
               value={searchText}
               className="input input-bordered join-item"
-              placeholder="Enter Name"
+              placeholder="Enter Name or mobile"
             />
             <button className="btn join-item bg-purple-700 text-white">
               Search

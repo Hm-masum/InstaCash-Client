@@ -34,32 +34,36 @@ const CashIn = () => {
       process,
     };
 
-    if (user.status === "pending")
+    if (user.status === "pending") {
       return toast.error(
         "please wait. admin will be activate your account soon!"
       );
-    if (user.status === "block")
+    } else if (user.status === "block") {
       return toast.error("Sorry!.Your account is block!");
-    if (pin.length !== 5) return toast.error("Your pin is not correct");
-    if (user.mobile !== recipient) return toast.error("Incorrect your number.");
-    if (donar === recipient) return toast.error("Incorrect agent number.");
-
-    try {
-      const result = await axiosSecure.post(`/cash-in`, transactionData);
-      if (result.data.insertedId !== null) {
-        refetch();
-        Refetch();
-        Swal.fire({
-          title: "Please, wait!",
-          text: "Your Cash In Request is Successful",
-          icon: "success",
-          timer: 1500,
-        });
-      } else {
-        toast.error(result.data.message);
+    } else if (pin.length !== 5) {
+      return toast.error("Your pin is not correct");
+    } else if (user.mobile !== recipient) {
+      return toast.error("Incorrect your number.");
+    } else if (donar === recipient) {
+      return toast.error("Incorrect agent number.");
+    } else {
+      try {
+        const result = await axiosSecure.post(`/cash-in`, transactionData);
+        if (result.data.insertedId !== null) {
+          refetch();
+          Refetch();
+          Swal.fire({
+            title: "Please, wait!",
+            text: "Your Cash In Request is Successful",
+            icon: "success",
+            timer: 1500,
+          });
+        } else {
+          toast.error(result.data.message);
+        }
+      } catch (err) {
+        toast.error(err.message);
       }
-    } catch (err) {
-      toast.error(err.message);
     }
   };
 

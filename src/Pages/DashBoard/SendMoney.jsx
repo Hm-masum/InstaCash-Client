@@ -31,21 +31,22 @@ const SendMoney = () => {
       process,
     };
 
-    if (user.status === "pending")
+    if (user.status === "pending") {
       return toast.error(
         "please wait. admin will be activate your account soon!"
       );
-    if (user.status === "block")
+    } else if (user.status === "block") {
       return toast.error("Sorry!.Your account is block!");
-    if (pin.length !== 5) return toast.error("Your pin is not correct");
-    if (user.mobile !== donar) return toast.error("Incorrect your number.");
-    if (donar === recipient) return toast.error("Incorrect recipient number.");
-    if (amount > user.balance && user.balance < 50) {
+    } else if (pin.length !== 5) {
+      return toast.error("Your pin is not correct");
+    } else if (user.mobile !== donar) {
+      return toast.error("Incorrect your number.");
+    } else if (donar === recipient) {
+      return toast.error("Incorrect recipient number.");
+    } else if (amount > Number(balance) || Number(balance) < 50) {
       return toast.error("Insufficient Balance.");
-    }
-    if (amount >= 100) {
-      if (amount + 5 > user.balance)
-        return toast.error("Insufficient Balance.");
+    } else if (amount >= 100 && amount + 5 > Number(balance)) {
+      return toast.error("Insufficient Balance.");
     } else {
       try {
         const result = await axiosSecure.post(`/send-money`, transactionData);
