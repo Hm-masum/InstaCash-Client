@@ -1,6 +1,9 @@
-# Art and Craft
+# InstaCash 
 
 - Live Site: [Insta-cash](https://instacash12.netlify.app/)
+
+## Project Overview
+InstaCash is a modern mobile banking solution designed to make financial transactions faster, safer, and more accessible. With InstaCash, users can send and receive money instantly and manage their accounts from anywhere, anytime. The app provides a seamless user experience with robust security features, ensuring every transaction is protected. Whether you're handling everyday expenses or making emergency transfers, InstaCash is your reliable companion for smart, digital banking.
 
 ### Here is the most important key features is this app.
 
@@ -50,4 +53,12 @@
    npm i
    ```
 
-
+### Credentials
+```
+Admin Gmail: hhmasum88@gmail.com
+Admin Password: 12345
+Agent Gmail: agent1@gmail.com
+Agent Password: 12345
+User Gmail: user1@gmail.com
+User Password: 12345
+```
